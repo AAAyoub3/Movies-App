@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
-import '../../myTheme.dart';
+import '../../utils/myTheme.dart';
 import 'PosterWithBookmarkWidget.dart';
 
 class PopularMoviesWidget extends StatelessWidget{

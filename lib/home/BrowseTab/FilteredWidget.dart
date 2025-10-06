@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:movies/home/MovieDetailsScreen.dart';
-import 'package:movies/myTheme.dart';
+import 'package:movies/utils/myTheme.dart';
 
 class FilterMovieWidget extends StatelessWidget {
   var object;

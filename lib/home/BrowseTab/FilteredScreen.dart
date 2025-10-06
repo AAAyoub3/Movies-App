@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movies/home/BrowseTab/FilteredWidget.dart';
-import 'package:movies/myTheme.dart';
+import 'package:movies/utils/myTheme.dart';
 
 class FilterScreen extends StatelessWidget {
   static const String routeName = 'Filter_screen';

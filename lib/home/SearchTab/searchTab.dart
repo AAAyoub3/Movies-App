@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movies/home/SearchTab/searchResult.dart';
-import '../../myTheme.dart';
+import '../../utils/myTheme.dart';
 
 class SearchTab extends StatefulWidget {
 

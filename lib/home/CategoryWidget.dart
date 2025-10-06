@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../myTheme.dart';
+import '../utils/myTheme.dart';
 
 class CategoryWidget extends StatelessWidget {
   Map<num,String> genre={
@@ -25,12 +25,12 @@ class CategoryWidget extends StatelessWidget {
     37    : "Western"
   };
   num category;
-  CategoryWidget({required this.category});
+  CategoryWidget({super.key, required this.category});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-        margin: const EdgeInsets.only(top: 10, left: 6, right: 6),
+        margin: const EdgeInsets.only(top: 3, left: 6, right: 6),
         padding: const EdgeInsets.all(6),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(5),

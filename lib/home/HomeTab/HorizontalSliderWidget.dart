@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movies/home/HomeTab/RecommendedWidget.dart';
-import '../../myTheme.dart';
+import '../../utils/myTheme.dart';
 import 'PosterWithBookmarkWidget.dart';
 
 class HorizontalSliderWidget extends StatelessWidget{

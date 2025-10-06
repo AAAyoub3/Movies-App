@@ -1,24 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:movies/API/api_manager.dart';
+import 'package:movies/data/model/movie_model.dart';
 import 'package:movies/home/HomeTab/HorizontalSliderWidget.dart';
 import 'package:movies/home/HomeTab/PopularWidget.dart';
-import 'package:movies/model/popularResource.dart';
 import 'dart:async';
 
-import '../../model/recommendResource.dart';
-import '../../model/releasesResource.dart';
+import '../../data/API/api_manager.dart';
+import '../../data/model/popular_resource.dart';
+import '../../data/model/recommend_resource.dart';
+import '../../data/model/new_releases_resource.dart';
+
 
 
 class HomeTab extends StatefulWidget {
+  const HomeTab({super.key});
+
   @override
   State<HomeTab> createState() => _HomeTabState();
 }
 
 class _HomeTabState extends State<HomeTab> {
   late PageController _pageController;
-  late List<dynamic> popularList;
-  late List<dynamic>  releaseList;
-  late List<dynamic>  recommendList;
+  late List<Movie> popularList;
+  late List<Movie>  releaseList;
+  late List<Movie>  recommendList;
 
 
   @override
@@ -60,11 +64,13 @@ class _HomeTabState extends State<HomeTab> {
           var releasesResponse = snapshot.data![1] as NewReleasesResource;
           var recommendResponse = snapshot.data![2] as RecommendResource;
 
+
+
           /// User Error
           if (snapshot.hasError) {
             return Column(
               children: [
-                Text(popularResponse.status_message ?? ''),
+                Text(popularResponse.statusMessage ?? ''),
                 ElevatedButton(onPressed: () {}, child: const Text("Try Again"))
               ],
             );
@@ -74,7 +80,7 @@ class _HomeTabState extends State<HomeTab> {
           if (popularResponse.results == null) {
             return Column(
               children: [
-                Text(popularResponse.status_message ?? ''),
+                Text(popularResponse.statusMessage ?? ''),
                 ElevatedButton(onPressed: () {}, child: const Text("Try Again"))
               ],
             );
@@ -83,7 +89,6 @@ class _HomeTabState extends State<HomeTab> {
           popularList = popularResponse.results!;
           releaseList = releasesResponse.results!;
           recommendList = recommendResponse.results!;
-
 
           return SingleChildScrollView(
             child: Column(
@@ -101,9 +106,11 @@ class _HomeTabState extends State<HomeTab> {
                           index: index,
                           list: popularList,
                         ),
-                    itemCount: popularList!.length,
+                    itemCount: popularList.length,
                   ),
                 ),
+
+                const SizedBox(height: 15,),
 
                 /// new releases
                 SizedBox(

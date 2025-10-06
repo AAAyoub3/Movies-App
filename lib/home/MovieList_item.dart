@@ -5,7 +5,7 @@ import 'package:movies/home/HomeTab/PosterWithBookmarkWidget.dart';
 class MovieListItem extends StatelessWidget {
   var object;
   bool state;
-  MovieListItem({required this.object, this.state = false});
+  MovieListItem({super.key, required this.object, this.state = false});
 
   @override
   Widget build(BuildContext context) {
@@ -17,18 +17,18 @@ class MovieListItem extends StatelessWidget {
           /// image and bookmark
           PosterWithBookmark(object: object,state: state),
 
-           SizedBox(width: 12,),
+           // SizedBox(width: 12,),
 
           /// side texts
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 10),
+            padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width*0.02),
             width: MediaQuery.of(context).size.width*0.5,
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("${object.title}",       style: Theme.of(context).textTheme.bodyMedium,maxLines: 3),
-                  Text("${object.releaseDate}", style: Theme.of(context).textTheme.bodyMedium,maxLines: 3),
-                  Text("${object.voteCount}",   style: Theme.of(context).textTheme.bodyMedium,maxLines: 3),
+                  Text("${object.title}",       style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: Colors.white), maxLines: 3),
+                  Text("Release date: ${object.releaseDate}", style: Theme.of(context).textTheme.bodyMedium, maxLines: 3),
+                  Text("Rating: ${object.voteAverage}",   style: Theme.of(context).textTheme.bodyMedium, maxLines: 3),
                 ],
               ),
           ),

@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:movies/API/api_manager.dart';
-import '../../model/DiscoverResource.dart';
-import '../../model/categoriesResource.dart';
+import '../../data/API/api_manager.dart';
+import '../../data/model/discover_resource.dart';
+import '../../data/model/categories_resource.dart';
 import 'card_item.dart';
 
 class BrowseTab extends StatelessWidget {
+  const BrowseTab({super.key});
+
 
   @override
   Widget build(BuildContext context) {
 
-    return FutureBuilder(future: Future.wait([ApiManager.getCategory(),ApiManager.getDiscover()]),
+    return FutureBuilder(
+        future: Future.wait([ApiManager.getCategory(),ApiManager.getDiscover()]),
         builder: (context, snapshot) {
-
           /// If it is still loading
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator(color: Theme
@@ -38,7 +40,11 @@ class BrowseTab extends StatelessWidget {
                 /// grid view
                 Expanded(
                   child: GridView.builder(
-                    itemBuilder: (context, index) => CardItem(title: categoryList[index].name!,id:categoryList[index].id!,list: discoverList, ),
+                    itemBuilder: (context, index) => CardItem(
+                      title: categoryList[index].name!,
+                      id:categoryList[index].id!,
+                      list: discoverList,
+                    ),
                     itemCount: categoryList!.length,
                     padding: const EdgeInsets.all(0),
                     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

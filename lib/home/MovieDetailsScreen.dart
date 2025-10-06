@@ -1,14 +1,16 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:movies/API/api_manager.dart';
 import 'package:movies/home/CategoryWidget.dart';
 import 'package:movies/home/HomeTab/PosterWithBookmarkWidget.dart';
-import 'package:movies/model/SimilarResource.dart';
-import '../myTheme.dart';
+import 'package:movies/data/API/api_manager.dart';
+import 'package:movies/data/model/similar_resource.dart';
+import '../utils/myTheme.dart';
 import 'HomeTab/HorizontalSliderWidget.dart';
 
 class MovieDetailsScreen extends StatelessWidget {
   static const String routeName = 'movieDetailsScreen';
+
+  const MovieDetailsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +34,7 @@ class MovieDetailsScreen extends StatelessWidget {
           if (snapshot.hasError) {
             return Column(
               children: [
-                Text(similarResponse.status_message ?? ''),
+                Text(similarResponse.statusMessage ?? ''),
                 ElevatedButton(onPressed: () {}, child: const Text("Try Again please"))
               ],
             );
@@ -42,7 +44,7 @@ class MovieDetailsScreen extends StatelessWidget {
           if (similarResponse.results == null) {
             return Column(
               children: [
-                Text(similarResponse.status_message ?? ''),
+                Text(similarResponse.statusMessage ?? ''),
                 ElevatedButton(onPressed: () {}, child: const Text("Try Again sir"))
               ],
             );
@@ -67,9 +69,9 @@ class MovieDetailsScreen extends StatelessWidget {
                             fit: BoxFit.fitHeight,
                             height: MediaQuery.of(context).size.height * 0.25,
                             placeholder: (context, url) =>
-                                Center(child: CircularProgressIndicator()),
+                                const Center(child: CircularProgressIndicator()),
                             errorWidget: (context, url, error) =>
-                                Icon(Icons.error),
+                                const Icon(Icons.error),
                           ),
                           IconButton(
                             onPressed: () {},
@@ -113,9 +115,9 @@ class MovieDetailsScreen extends StatelessWidget {
                               /// categories
                               SizedBox(
                                 height:
-                                    MediaQuery.of(context).size.height * 0.11,
+                                    MediaQuery.of(context).size.height * 0.1,
                                 child: GridView.builder(
-                                  physics: NeverScrollableScrollPhysics(),
+                                  physics: const NeverScrollableScrollPhysics(),
                                   itemBuilder: (context, index) =>
                                       CategoryWidget(
                                           category:

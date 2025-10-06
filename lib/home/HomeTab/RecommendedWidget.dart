@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:movies/home/HomeTab/PosterWithBookmarkWidget.dart';
 
-import '../../myTheme.dart';
+import '../../utils/myTheme.dart';
 
 class RecommendedPosterWithBookmark extends StatefulWidget {
   var object;

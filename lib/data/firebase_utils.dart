@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'MovieDataClass.dart';
+import 'package:movies/data/model/movie_model.dart';
+
+
 class FirebaseUtils{
 
   static CollectionReference<Movie> getMoviesCollection(){

@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:movies/home/BrowseTab/FilteredScreen.dart';
-import 'package:movies/myTheme.dart';
-import '../../model/DiscoverResource.dart';
+import 'package:movies/utils/myTheme.dart';
+
+import '../../data/model/movie_model.dart';
 
 class CardItem extends StatelessWidget {
-  String title;
-  var id;
-  var list;
-  Map<num,String> genre={
+  final String title;
+  final num? id;
+  final List<Movie>? list;
+  final Map<num,String> genre={
     28    : "https://image.tmdb.org/t/p/w500/628Dep6AxEtDxjZoGP78TsOxYbK.jpg",
     12    : "https://image.tmdb.org/t/p/w500/mfm4srsPALxaeOMFFFJ0drXTyXy.jpg",
     16    : "https://image.tmdb.org/t/p/w500/45zVtZx6Tzx3RKeDziK25K9geFf.jpg",
@@ -29,32 +30,39 @@ class CardItem extends StatelessWidget {
     37    : "https://image.tmdb.org/t/p/w500/eoCSp75lxatmIa6aGqfnzwtbttd.jpg"
   };
 
-  CardItem({required this.title,required this.id,required this.list});
+  CardItem({super.key, required this.title, required this.id, required this.list});
 
 
 
 
   @override
   Widget build(BuildContext context) {
-    List<Results> outputList=[];
-    for(int i = 0 ; i<list.length;i++){
-      for(int j =0 ;j<list[i].genreIds.length;j++){
-          if(list[i].genreIds[j] == id)
+    List<Movie> outputList=[];
+    for(int i = 0 ; i < (list?.length ?? 0.0);i++){
+      for(int j =0 ;j < (list?[i].genreIds?.length ?? 0.0);j++){
+          if(list?[i].genreIds?[j] == id)
           {
-          outputList.add(list[i]);
+          outputList.add(list![i]);
           break;
           }
       }
 
     }
     return InkWell(
-      onTap: (){Navigator.pushNamed(context,FilterScreen.routeName,arguments: FilterDataArgs(list: outputList, title: title) );},
+      onTap: (){Navigator.pushNamed(context,
+          FilterScreen.routeName,
+          arguments: FilterDataArgs(list: outputList, title: title)
+      );},
       child: Stack(
         alignment: Alignment.center,
         children: [
           Image.network(genre[id]!,fit: BoxFit.fill),
-          Container(color:MyThemeData.whiteColor.withOpacity(0.5),child: Text(title,
-            style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 25,color: MyThemeData.darkGreyColor,),))
+          Container(color:MyThemeData.whiteColor.withValues(alpha: 0.5),child:
+            Text(title,
+              style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                fontSize: 25,color: MyThemeData.darkGreyColor,),
+            )
+          )
         ],
       ),
     );

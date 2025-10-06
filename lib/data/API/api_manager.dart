@@ -1,14 +1,17 @@
+import 'package:movies/data/API/api_constants.dart';
+import 'package:movies/data/model/popular_resource.dart';
+
 import 'dart:convert';
 import 'dart:io';
+
 import 'package:http/http.dart' as http;
-import 'package:movies/API/api_constants.dart';
-import 'package:movies/model/SimilarResource.dart';
-import '../model/DiscoverResource.dart';
-import '../model/categoriesResource.dart';
-import '../model/popularResource.dart';
-import '../model/recommendResource.dart';
-import '../model/releasesResource.dart';
-import '../model/searchResource.dart';
+import 'package:movies/data/model/recommend_resource.dart';
+import 'package:movies/data/model/new_releases_resource.dart';
+
+import '../model/discover_resource.dart';
+import '../model/similar_resource.dart';
+import '../model/categories_resource.dart';
+import '../model/search_resource.dart';
 
 class ApiManager{
   static Future<PopularResource> getPopular() async{
@@ -86,7 +89,7 @@ class ApiManager{
     }
   }
 
-  static Future<SimilarResource> getSimilar(var id) async{
+  static Future<SimilarResource>? getSimilar(var id) async{
 
     Uri url = Uri.https(ApiConstants.baseURL,"/3/movie/$id/similar");
 

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:movies/home/MovieList_item.dart';
-import 'package:movies/myTheme.dart';
+import 'package:movies/utils/myTheme.dart';
 import 'package:provider/provider.dart';
 
-import '../provider.dart';
+import '../../utils/provider.dart';
 
 class WatchListTab extends StatefulWidget {
+  const WatchListTab({super.key});
+
 
   @override
   State<WatchListTab> createState() => _WatchListTabState();
@@ -15,8 +17,8 @@ class _WatchListTabState extends State<WatchListTab> {
   @override
   Widget build(BuildContext context) {
 
-    var listprovider= Provider.of<provider_list>(context);
-    listprovider.getAllMoviesFromFireStore();
+    var listProvider= Provider.of<ProviderList>(context);
+    // listProvider.getAllMoviesFromFireStore();
     return Container(
       margin: const EdgeInsets.all(15),
       child: Column(
@@ -31,10 +33,10 @@ class _WatchListTabState extends State<WatchListTab> {
           /// List View
           Expanded(
             child: ListView.separated(
-              itemBuilder: (context, index) => MovieListItem(object: listprovider.Movieslist[index],state: true),
+              itemBuilder: (context, index) => MovieListItem(object: listProvider.moviesList[index],state: true),
               separatorBuilder: (context, index) =>
                   Divider(color: MyThemeData.lightGreyColor),
-              itemCount: listprovider.Movieslist.length,
+              itemCount: listProvider.moviesList.length,
               padding: const EdgeInsets.symmetric(vertical: 12),
             ),
           ),

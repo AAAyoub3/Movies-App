@@ -2,15 +2,17 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:movies/home/MovieDetailsScreen.dart';
 import 'package:provider/provider.dart';
-import '../../MovieDataClass.dart';
-import '../../firebase_utils.dart';
-import '../../myTheme.dart';
-import '../provider.dart';
+import 'package:movies/data/model/movie_model.dart';
+import '../../data/firebase_utils.dart';
+import '../../utils/myTheme.dart';
+import '../../utils/provider.dart';
 
 class PosterWithBookmark extends StatefulWidget {
-  bool state;
+  late bool state;
   var object;
-  PosterWithBookmark({this.state = false,required this.object});
+  PosterWithBookmark({super.key,
+    this.state = false,
+    required this.object});
 
   @override
   State<PosterWithBookmark> createState() => _PosterWithBookmarkState();
@@ -21,13 +23,16 @@ class _PosterWithBookmarkState extends State<PosterWithBookmark> {
 
   @override
   Widget build(BuildContext context) {
-    var listprovider= Provider.of<provider_list>(context);
-    listprovider.getAllMoviesFromFireStore();
-    for(int i = 0 ;i<listprovider.Movieslist.length;i++){
-      if(listprovider.Movieslist[i].id == widget.object.id)
-        {setState(() {
-          widget.state =true;
-        });}
+    var listProvider= Provider.of<ProviderList>(context);
+    listProvider.getAllMoviesFromFireStore();
+
+    for(int i = 0 ;i<listProvider.moviesList.length;i++){
+      if(listProvider.moviesList[i].id == widget.object.id)
+        {
+          setState(() {
+            widget.state = true;
+          });
+        }
     }
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -67,19 +72,30 @@ class _PosterWithBookmarkState extends State<PosterWithBookmark> {
             /// bookmark
             InkWell(
                 onTap: () {
-                  setState((){
+                  // setState((){
                     if(widget.state==false){
-                      AddMovie();
-                      widget.state=true;
+                      addMovie();
+                      widget.state = true;
+                      setState(() {
+
+                      });
                     }
-                    });
+                    else {
+                      removeMovie();
+                      widget.state = false;
+                      setState(() {
+
+                      });
+                    }
+                    // });
+                  print(widget.state);
                 },
                 child: widget.state == false
                     ? Stack(alignment: Alignment.center, children: [
                         /// bookmark
                         Icon(
                           Icons.bookmark,
-                          color: MyThemeData.greyColor.withOpacity(0.8),
+                          color: MyThemeData.greyColor.withValues(alpha: 0.8),
                           size: 50,
                         ),
 
@@ -102,7 +118,7 @@ class _PosterWithBookmarkState extends State<PosterWithBookmark> {
       ),
     );
   }
-  void AddMovie(){ /// working
+  void addMovie(){ /// working
     if(formKey.currentState!.validate()){
       FirebaseUtils.addMovieToFireStore(Movie(
         title: widget.object.title,
@@ -125,6 +141,14 @@ class _PosterWithBookmarkState extends State<PosterWithBookmark> {
       setState(() {
         print('Error');
       });
+    }
+  }
+
+  void removeMovie(){
+    try{
+      FirebaseUtils.deleteMovieFromFireStore(widget.object.id.toString());
+    }catch(e){
+      print(e);
     }
   }
 }
