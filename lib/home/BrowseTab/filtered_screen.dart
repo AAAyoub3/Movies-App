@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:movies/home/BrowseTab/FilteredWidget.dart';
-import 'package:movies/utils/myTheme.dart';
+import 'package:movies/home/BrowseTab/filtered_movie_widget.dart';
+import 'package:movies/utils/my_theme.dart';
 
 class FilterScreen extends StatelessWidget {
   static const String routeName = 'Filter_screen';
+
+  const FilterScreen({super.key});
   @override
   Widget build(BuildContext context) {
     var args = ModalRoute.of(context)!.settings.arguments as FilterDataArgs;

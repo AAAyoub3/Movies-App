@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:movies/home/MovieList_item.dart';
-import 'package:movies/utils/myTheme.dart';
+import 'package:movies/home/components/movie_list_item.dart';
+import 'package:movies/utils/my_theme.dart';
 import 'package:provider/provider.dart';
 
 import '../../utils/provider.dart';
@@ -33,7 +33,7 @@ class _WatchListTabState extends State<WatchListTab> {
           /// List View
           Expanded(
             child: ListView.separated(
-              itemBuilder: (context, index) => MovieListItem(object: listProvider.moviesList[index],state: true),
+              itemBuilder: (context, index) => MovieListItem(object: listProvider.moviesList[index]),
               separatorBuilder: (context, index) =>
                   Divider(color: MyThemeData.lightGreyColor),
               itemCount: listProvider.moviesList.length,

@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:movies/home/SearchTab/searchResult.dart';
-import '../../utils/myTheme.dart';
+import 'package:movies/home/SearchTab/search_result.dart';
+import '../../utils/my_theme.dart';
 
 class SearchTab extends StatefulWidget {
+  const SearchTab({super.key});
+
 
   @override
   State<SearchTab> createState() => _SearchTabState();
 }
 
 class _SearchTabState extends State<SearchTab> {
-  String title='';
+  String title = '';
   @override
   Widget build(BuildContext context) {
 

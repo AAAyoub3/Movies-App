@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import '../utils/myTheme.dart';
-import 'BrowseTab/browseTab.dart';
+import '../utils/my_theme.dart';
+import 'BrowseTab/browse_tab.dart';
 import 'HomeTab/home_tab.dart';
-import 'SearchTab/SearchTab.dart';
-import 'WatchListTab/watchListTab.dart';
+import 'SearchTab/search_tab.dart';
+import 'WatchListTab/watch_list_tab.dart';
 class HomeScreen extends StatefulWidget {
   static const String routeName = 'HomeScreen';
 
@@ -51,10 +51,10 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   List<Widget> tabs = [
-    HomeTab(),
+    const HomeTab(),
     SearchTab(),
-    BrowseTab(),
-    WatchListTab(),
+    const BrowseTab(),
+    const WatchListTab(),
   ];
 
 }

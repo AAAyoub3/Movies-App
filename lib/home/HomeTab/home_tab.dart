@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:movies/data/model/movie_model.dart';
-import 'package:movies/home/HomeTab/HorizontalSliderWidget.dart';
-import 'package:movies/home/HomeTab/PopularWidget.dart';
+import 'package:movies/home/components/horizontal_slider.dart';
+import 'package:movies/home/HomeTab/popular_movies_widget.dart';
 import 'dart:async';
 
 import '../../data/API/api_manager.dart';
 import '../../data/model/popular_resource.dart';
 import '../../data/model/recommend_resource.dart';
 import '../../data/model/new_releases_resource.dart';
-
-
 
 class HomeTab extends StatefulWidget {
   const HomeTab({super.key});
@@ -29,12 +27,11 @@ class _HomeTabState extends State<HomeTab> {
   void initState() {
     super.initState();
     _pageController = PageController();
-
     Timer.periodic(const Duration(seconds: 10), (Timer timer) { /// Duration to the run this code section
         if (_pageController.hasClients) {
         var nextPage = _pageController.page! + 1;
 
-        if (nextPage >= popularList!.length) { /// Reached the end then start over
+        if (nextPage >= popularList.length) { /// Reached the end then start over
           _pageController.jumpToPage(0);
         }
         else {
@@ -51,27 +48,33 @@ class _HomeTabState extends State<HomeTab> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: Future.wait([ApiManager.getPopular(), ApiManager.getRelease(), ApiManager.getRecommended()]),
+        future: Future.wait([
+          ApiManager.getPopular(),
+          ApiManager.getRelease(),
+          ApiManager.getRecommended()
+        ]),
         builder: (context, snapshot) {
-          /// If he is still loading
+          /// If still loading
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator(color: Theme
-                .of(context)
-                .primaryColor));
+            return Center(child: CircularProgressIndicator(
+                color: Theme.of(context).primaryColor));
           }
 
           var popularResponse = snapshot.data![0] as PopularResource;
           var releasesResponse = snapshot.data![1] as NewReleasesResource;
           var recommendResponse = snapshot.data![2] as RecommendResource;
 
-
-
           /// User Error
           if (snapshot.hasError) {
             return Column(
               children: [
                 Text(popularResponse.statusMessage ?? ''),
-                ElevatedButton(onPressed: () {}, child: const Text("Try Again"))
+                // ElevatedButton(
+                //     onPressed: () {
+                //       setState(() {});
+                //     },
+                //     child: const Text("Try Again")
+                // )
               ],
             );
           }
@@ -81,7 +84,6 @@ class _HomeTabState extends State<HomeTab> {
             return Column(
               children: [
                 Text(popularResponse.statusMessage ?? ''),
-                ElevatedButton(onPressed: () {}, child: const Text("Try Again"))
               ],
             );
           }
@@ -115,7 +117,7 @@ class _HomeTabState extends State<HomeTab> {
                 /// new releases
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.3,
-                  child: HorizontalSliderWidget(
+                  child: HorizontalSlider(
                     title: "New Releases",
                     list: releaseList,
                   ),
@@ -126,7 +128,7 @@ class _HomeTabState extends State<HomeTab> {
                 /// recommended
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.45,
-                  child: HorizontalSliderWidget(
+                  child: HorizontalSlider(
                     title: "Recommended",
                     list: recommendList,
                     recommended: true,

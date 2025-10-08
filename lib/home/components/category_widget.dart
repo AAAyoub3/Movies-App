@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../utils/myTheme.dart';
+import '../../utils/my_theme.dart';
 
 class CategoryWidget extends StatelessWidget {
-  Map<num,String> genre={
+  final Map<num,String> genre={
     28    : "Action",
     12    : "Adventure",
     16    : "Animation",
@@ -24,7 +24,7 @@ class CategoryWidget extends StatelessWidget {
     10752 : "War" ,
     37    : "Western"
   };
-  num category;
+  final num category;
   CategoryWidget({super.key, required this.category});
 
   @override

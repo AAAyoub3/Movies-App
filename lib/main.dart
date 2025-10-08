@@ -1,11 +1,11 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:movies/home/MovieDetailsScreen.dart';
+import 'package:movies/home/movie_details_screen.dart';
 import 'package:provider/provider.dart';
-import 'home/BrowseTab/FilteredScreen.dart';
+import 'home/BrowseTab/filtered_screen.dart';
 import 'home/homescreen.dart';
 import 'utils/provider.dart';
-import 'utils/myTheme.dart';
+import 'utils/my_theme.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
 
 void main() async {

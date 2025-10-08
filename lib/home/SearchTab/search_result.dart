@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movies/data/API/api_manager.dart';
-import 'package:movies/home/MovieList_item.dart';
+import 'package:movies/home/components/movie_list_item.dart';
 
 import '../../data/model/search_resource.dart';
 import '../../data/model/movie_model.dart';
@@ -51,7 +51,7 @@ class _SearchResultState extends State<SearchResult> {
           return Expanded(
               child: ListView.builder(
                   itemBuilder: (context, index) =>
-                      MovieListItem(object: searchList?[index]),
+                      MovieListItem(object: searchList?[index] ?? Movie()),
                   itemCount: searchList?.length));
         });
   }

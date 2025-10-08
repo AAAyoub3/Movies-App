@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:movies/home/HomeTab/RecommendedWidget.dart';
-import '../../utils/myTheme.dart';
-import 'PosterWithBookmarkWidget.dart';
+import 'package:movies/data/model/movie_model.dart';
+import 'package:movies/home/HomeTab/recommended_widget.dart';
+import '../../utils/my_theme.dart';
+import 'poster_with_bookmark.dart';
 
-class HorizontalSliderWidget extends StatelessWidget{
-  String title;
-  var list;
-  bool recommended;
-  HorizontalSliderWidget({required this.title, required this.list, this.recommended = false});
+class HorizontalSlider extends StatelessWidget{
+  final String title;
+  final List<Movie>? list;
+  final bool recommended;
+  const HorizontalSlider({super.key, required this.title, required this.list, this.recommended = false});
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +32,7 @@ class HorizontalSliderWidget extends StatelessWidget{
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemBuilder:(context, index) =>
-                  RecommendedPosterWithBookmark(
+                  RecommendedWidget(
                     object: list![index],
                   ),
               itemCount: list!.length,

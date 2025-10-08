@@ -6,7 +6,7 @@ import '../data/firebase_utils.dart';
 class ProviderList extends ChangeNotifier {
   List<Movie> moviesList = [];
 
-  void getAllMoviesFromFireStore() async{
+  Future<void> getAllMoviesFromFireStore() async{
     QuerySnapshot<Movie> querySnapshot = await FirebaseUtils.getMoviesCollection().get();
     moviesList = querySnapshot.docs.map((doc){return doc.data();}).toList();
     notifyListeners();

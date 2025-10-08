@@ -1,11 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:movies/home/CategoryWidget.dart';
-import 'package:movies/home/HomeTab/PosterWithBookmarkWidget.dart';
+import 'package:movies/data/model/movie_model.dart';
+import 'package:movies/home/components/category_widget.dart';
+import 'package:movies/home/components/poster_with_bookmark.dart';
 import 'package:movies/data/API/api_manager.dart';
 import 'package:movies/data/model/similar_resource.dart';
-import '../utils/myTheme.dart';
-import 'HomeTab/HorizontalSliderWidget.dart';
+import '../utils/my_theme.dart';
+import 'components/horizontal_slider.dart';
+import 'full_media_screen.dart';
 
 class MovieDetailsScreen extends StatelessWidget {
   static const String routeName = 'movieDetailsScreen';
@@ -35,7 +37,8 @@ class MovieDetailsScreen extends StatelessWidget {
             return Column(
               children: [
                 Text(similarResponse.statusMessage ?? ''),
-                ElevatedButton(onPressed: () {}, child: const Text("Try Again please"))
+                ElevatedButton(
+                    onPressed: () {}, child: const Text("Try Again please"))
               ],
             );
           }
@@ -45,7 +48,8 @@ class MovieDetailsScreen extends StatelessWidget {
             return Column(
               children: [
                 Text(similarResponse.statusMessage ?? ''),
-                ElevatedButton(onPressed: () {}, child: const Text("Try Again sir"))
+                ElevatedButton(
+                    onPressed: () {}, child: const Text("Try Again sir"))
               ],
             );
           }
@@ -53,7 +57,7 @@ class MovieDetailsScreen extends StatelessWidget {
           return Scaffold(
             backgroundColor: MyThemeData.blackColor,
             appBar: AppBar(
-              title: Text(args.object.title),
+              title: Text(args.object.title ?? ''),
             ),
             body: SingleChildScrollView(
               child: Column(
@@ -63,22 +67,36 @@ class MovieDetailsScreen extends StatelessWidget {
                     Column(
                       children: [
                         Stack(alignment: Alignment.center, children: [
-                          CachedNetworkImage(
-                            imageUrl:
-                                "https://image.tmdb.org/t/p/w500${args.object.backdropPath}",
-                            fit: BoxFit.fitHeight,
-                            height: MediaQuery.of(context).size.height * 0.25,
-                            placeholder: (context, url) =>
-                                const Center(child: CircularProgressIndicator()),
-                            errorWidget: (context, url, error) =>
-                                const Icon(Icons.error),
+                          InkWell(
+                            onTap: (){
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) => FullMediaScreen(
+                                      mediaUrl: "https://image.tmdb.org/t/p/w500${args.object.backdropPath}"),
+                                ),
+                              );
+                            },
+                            child: CachedNetworkImage(
+                              imageUrl: args.object.backdropPath == null
+                                  ? ''
+                                  : "https://image.tmdb.org/t/p/w500${args.object.backdropPath}",
+                              fit: BoxFit.fitHeight,
+                              height: MediaQuery.of(context).size.height * 0.25,
+                              placeholder: (context, url) => const Center(
+                                  child: CircularProgressIndicator()),
+                              errorWidget: (context, url, error) =>
+                                  const Icon(Icons.error),
+                            ),
                           ),
-                          IconButton(
+                          args.object.video == true
+                              ? IconButton(
                             onPressed: () {},
                             icon: const Icon(Icons.play_circle),
                             color: MyThemeData.whiteColor,
                             iconSize: 100,
-                          ),
+                          )
+                              : const SizedBox.shrink(),
                         ]),
                       ],
                     ),
@@ -88,7 +106,7 @@ class MovieDetailsScreen extends StatelessWidget {
                       padding:
                           const EdgeInsets.only(left: 12.0, bottom: 6, top: 6),
                       child: Text(
-                        args.object.title,
+                        args.object.title ?? '',
                         style: Theme.of(context).textTheme.titleMedium,
                       ),
                     ),
@@ -96,7 +114,7 @@ class MovieDetailsScreen extends StatelessWidget {
                       padding:
                           const EdgeInsets.only(left: 12.0, bottom: 6, top: 6),
                       child: Text(
-                        args.object.releaseDate,
+                        args.object.releaseDate ?? '',
                         style: Theme.of(context).textTheme.bodySmall,
                       ),
                     ),
@@ -106,7 +124,7 @@ class MovieDetailsScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         /// img and bookmark
-                        PosterWithBookmark(object: args.object),
+                        PosterWithBookmark(object: args.object, inMovieDetailScreen: true,),
 
                         Expanded(
                           child: Column(
@@ -121,8 +139,8 @@ class MovieDetailsScreen extends StatelessWidget {
                                   itemBuilder: (context, index) =>
                                       CategoryWidget(
                                           category:
-                                              args.object.genreIds[index]),
-                                  itemCount: args.object.genreIds.length,
+                                              args.object.genreIds?[index] ?? 0),
+                                  itemCount: args.object.genreIds?.length ?? 0,
                                   gridDelegate:
                                       const SliverGridDelegateWithFixedCrossAxisCount(
                                     crossAxisCount: 3,
@@ -133,7 +151,7 @@ class MovieDetailsScreen extends StatelessWidget {
 
                               /// description
                               Text(
-                                args.object.overview,
+                                args.object.overview ?? '',
                                 style: Theme.of(context).textTheme.bodyMedium,
                               ),
 
@@ -153,9 +171,10 @@ class MovieDetailsScreen extends StatelessWidget {
                       ],
                     ),
 
+                    /// More like this
                     SizedBox(
                         height: MediaQuery.of(context).size.height * 0.3,
-                        child: HorizontalSliderWidget(
+                        child: HorizontalSlider(
                             title: "More Like This", list: categoryList)),
 
                     const SizedBox(height: 15)
@@ -167,6 +186,6 @@ class MovieDetailsScreen extends StatelessWidget {
 }
 
 class MovieArgs {
-  var object;
+  final Movie object;
   MovieArgs({required this.object});
 }

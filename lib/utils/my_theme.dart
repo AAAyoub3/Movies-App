@@ -13,7 +13,7 @@ class MyThemeData {
 
   static ThemeData darkTheme = ThemeData(
     appBarTheme: AppBarTheme(
-      color: greyColor
+      backgroundColor: greyColor
     ),
 
       textTheme: TextTheme(
